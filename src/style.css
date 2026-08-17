@@ -1,0 +1,82 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+/* visual styling and anchoring */
+body {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    right: 0;
+    font-family: mononoki, mono-space;
+    background: black;
+    color: white;
+}
+
+/* layout */
+body {
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+}
+
+input,
+select,
+button,
+option {
+    font-family: mononoki, mono-space;
+    background: hsl(0, 0%, 30%);
+    color: hsl(0, 0%, 80%);
+    margin: 2px;
+    padding: 3px 5px;
+    border: none;
+}
+
+/* Fixed controls at the top */
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 8px;
+    background: hsl(0, 0%, 20%);
+    z-index: 1;
+}
+
+.slider-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+/* Utility class for our flex container tree nodes */
+.node-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.children-container {
+    display: flex;
+    gap: 0;
+}
+
+.block {
+    color: transparent;
+}
+
+.block:hover {
+    color: white;
+    text-shadow: 0 0 3px #000;
+}
+
+#canvas {
+    position: fixed;
+}
+
+#intensityMultiplier {
+    width: 300px;
+}
