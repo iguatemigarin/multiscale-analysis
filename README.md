@@ -1,5 +1,7 @@
 # multiscale-analysis
 
+**Live:** https://iguatemigarin.github.io/multiscale-analysis/
+
 A real-time WebGL2 visualizer for live audio. It takes a window of microphone
 samples, recursively halves it into a binary tree of averages, and renders every
 node of that tree as an instanced 3D bar — so you see the signal at all scales at
@@ -38,17 +40,41 @@ npm install
 npm run dev      # or: make start
 ```
 
-Then open the URL Vite prints and pick an input from the **Mic** dropdown —
-nothing is drawn until an audio device is selected.
+The browser prompts for microphone access on load (device labels aren't
+available until it's granted). Then open the URL Vite prints and pick an input
+from the **Mic** dropdown — nothing is drawn until an audio device is selected.
 
 Other scripts:
 
 ```bash
-npm run build    # tsc --noEmit type check, then vite build
-npm run preview  # serve the production build
+npm run build    # type check (tsc, noEmit), then vite build
+npm run preview  # serve the production build at /multiscale-analysis/
 ```
 
 The build uses `rolldown-vite` pinned in place of `vite` via `overrides`.
+
+## Deployment
+
+Pushes to `main` are built and published to GitHub Pages by
+`.github/workflows/deploy.yml`, using the official `upload-pages-artifact` /
+`deploy-pages` actions — there's no `gh-pages` branch. The repo must have
+**Settings → Pages → Source** set to **GitHub Actions**. The workflow can also
+be triggered manually from the Actions tab.
+
+Two details in `vite.config.ts` exist specifically for Pages:
+
+- **`base`** is `/multiscale-analysis/` for `build` and `preview`, and `/` for
+  `dev`. A project page is served from a subpath, so without this every asset
+  URL would point at the domain root and 404. Preview shares the production base
+  so it reproduces the deployed site; dev stays at the root.
+- **`build.assetsInlineLimit`** excludes `audioProcessor.js`. It's ~250 bytes,
+  under the default 4 kB inline limit, so its `?url` import would otherwise be
+  compiled to a base64 `data:` URL in production only — a dev/prod split in what
+  `audioWorklet.addModule()` receives. Forcing a real emitted asset keeps the
+  two identical.
+
+Pages serves over HTTPS, which satisfies the secure-context requirement for both
+`getUserMedia` and `requestMIDIAccess`.
 
 ## Controls
 
@@ -92,6 +118,8 @@ runtime with `MidiController#setMapping`.
 ## Layout
 
 ```
+.github/workflows/deploy.yml            Build + publish to GitHub Pages on push to main
+vite.config.ts                          Pages base path, worklet asset handling
 index.html                              Canvas + control panel (elements are read by id)
 src/main.ts                             Entry point
 src/updateVisualization.ts              Wiring: devices, MIDI binding, render loop
