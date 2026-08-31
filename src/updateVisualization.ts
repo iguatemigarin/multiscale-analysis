@@ -1,6 +1,7 @@
 import { computeHierarchicalAverages } from "./analysis/computeHierarchicalAverages";
 import { GLSLRenderer } from "./renderer/glslRenderer";
 import { getMicInputStream, getAudioInputDevices } from "./audio/getMicInputStream";
+import { registerKeyboardControls } from "./controls/keyboardControls";
 
 declare const canvas: HTMLCanvasElement;
 declare const micInput: HTMLSelectElement;
@@ -21,6 +22,8 @@ export const updateVisualization = async () => {
       document.exitFullscreen();
     }
   });
+
+  registerKeyboardControls();
 
   // Audio state
   let audioStop: (() => void) | null = null;

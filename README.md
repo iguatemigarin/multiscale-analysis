@@ -84,6 +84,17 @@ Pages serves over HTTPS, which satisfies the secure-context requirement for
 | Wheel | Zoom (distance clamped to 100–3000) |
 | Double-click | Toggle fullscreen |
 
+**Keyboard**
+
+| Key | Effect |
+| --- | --- |
+| `1` | View → `Averages` |
+| `2` | View → `Averages Delta (from parent)` |
+| `3` | Scale Grading → `Monochromatic` |
+| `4` | Scale Grading → `Color` |
+
+Keys with Ctrl/Cmd/Alt held are ignored so browser shortcuts still work.
+
 **UI panel**
 
 - **Mic** — audio input device selection; the list repopulates on device
@@ -110,6 +121,7 @@ src/analysis/normalizeArray.ts          Min/max rescale to [0, 1]
 src/analysis/computeHierarchicalAverages.ts   Prefix-sum binary tree of averages
 src/audio/getMicInputStream.ts          getUserMedia + worklet + ring buffer
 src/audio/audioProcessor.js             AudioWorkletProcessor
+src/controls/keyboardControls.ts        Key → control bindings
 src/renderer/glslRenderer.ts            WebGL2 instanced renderer, camera, orbit controls
 src/renderer/shaders/*.glsl             Vertex (extrusion) and fragment (color/lighting)
 ```
