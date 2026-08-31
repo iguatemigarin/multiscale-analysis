@@ -75,6 +75,7 @@ option {
 
 #canvas {
     position: fixed;
+    cursor: none;
 }
 
 #intensityMultiplier {

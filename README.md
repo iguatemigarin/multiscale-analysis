@@ -84,6 +84,9 @@ Pages serves over HTTPS, which satisfies the secure-context requirement for
 | Wheel | Zoom (distance clamped to 100–3000) |
 | Double-click | Toggle fullscreen |
 
+The cursor is hidden over the canvas (`cursor: none`); it reappears over the
+control panel.
+
 **Keyboard**
 
 | Key | Effect |
