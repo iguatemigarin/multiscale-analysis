@@ -28,9 +28,7 @@ The render loop runs at a fixed ~12 fps (`setTimeout(loop, 1000 / 12)`).
 ## Requirements
 
 - Node.js with npm
-- A browser with **WebGL2**, **AudioWorklet**, and — for MIDI control —
-  **Web MIDI** (Chromium-based browsers). MIDI is optional; without it the app
-  logs a warning and runs normally.
+- A browser with **WebGL2** and **AudioWorklet**.
 - Microphone permission (requested on load, to enumerate labeled input devices).
 
 ## Running
@@ -73,8 +71,8 @@ Two details in `vite.config.ts` exist specifically for Pages:
   `audioWorklet.addModule()` receives. Forcing a real emitted asset keeps the
   two identical.
 
-Pages serves over HTTPS, which satisfies the secure-context requirement for both
-`getUserMedia` and `requestMIDIAccess`.
+Pages serves over HTTPS, which satisfies the secure-context requirement for
+`getUserMedia`.
 
 ## Controls
 
@@ -88,7 +86,7 @@ Pages serves over HTTPS, which satisfies the secure-context requirement for both
 
 **UI panel**
 
-- **Mic** / **MIDI** — input device selection; both lists repopulate on device
+- **Mic** — audio input device selection; the list repopulates on device
   hotplug.
 - **View** — `Averages` shows each node's raw average; `Averages Delta (from
   parent)` shows the difference between a node and its parent, which highlights
@@ -100,21 +98,6 @@ Pages serves over HTTPS, which satisfies the secure-context requirement for both
 - **Clamp** — lower bound applied to intensity (`max(clamp, intensity)`),
   flattening everything below the threshold.
 
-**MIDI** — CC messages on channel 0 (`src/midi/midiController.ts`):
-
-| CC | Target | Range |
-| --- | --- | --- |
-| 0 | Distance / zoom | 100 → 3000 |
-| 1 | Rotation X | −π/2 → π/2 |
-| 2 | Rotation Y | −π → π |
-| 3 | Pan X | −500 → 500 |
-| 4 | Pan Y | −500 → 500 |
-| 5 | Intensity | 1 → 100 |
-| 6 | Clamp | 0 → 1 |
-
-Values are mapped linearly from the 0–127 CC range. Mappings can be changed at
-runtime with `MidiController#setMapping`.
-
 ## Layout
 
 ```
@@ -122,12 +105,11 @@ runtime with `MidiController#setMapping`.
 vite.config.ts                          Pages base path, worklet asset handling
 index.html                              Canvas + control panel (elements are read by id)
 src/main.ts                             Entry point
-src/updateVisualization.ts              Wiring: devices, MIDI binding, render loop
+src/updateVisualization.ts              Wiring: devices, controls, render loop
 src/analysis/normalizeArray.ts          Min/max rescale to [0, 1]
 src/analysis/computeHierarchicalAverages.ts   Prefix-sum binary tree of averages
 src/audio/getMicInputStream.ts          getUserMedia + worklet + ring buffer
 src/audio/audioProcessor.js             AudioWorkletProcessor
-src/midi/midiController.ts              Web MIDI CC → setter mapping
 src/renderer/glslRenderer.ts            WebGL2 instanced renderer, camera, orbit controls
 src/renderer/shaders/*.glsl             Vertex (extrusion) and fragment (color/lighting)
 ```
