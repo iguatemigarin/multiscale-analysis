@@ -125,27 +125,6 @@ export class GLSLRenderer {
   private lastMouseX = 0;
   private lastMouseY = 0;
 
-  // MIDI control setters
-  setRotationX(value: number): void {
-    this.rotationX = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, value));
-  }
-
-  setRotationY(value: number): void {
-    this.rotationY = value;
-  }
-
-  setDistance(value: number): void {
-    this.distance = Math.max(100, Math.min(3000, value));
-  }
-
-  setPanX(value: number): void {
-    this.panX = value;
-  }
-
-  setPanY(value: number): void {
-    this.panY = value;
-  }
-
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
     const gl = canvas.getContext('webgl2', { antialias: true, depth: true });
