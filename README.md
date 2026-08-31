@@ -92,8 +92,13 @@ Pages serves over HTTPS, which satisfies the secure-context requirement for
 | `2` | View → `Averages Delta (from parent)` |
 | `3` | Scale Grading → `Monochromatic` |
 | `4` | Scale Grading → `Color` |
+| `↑` / `↓` | Ramp Intensity up / down while held |
+| `→` / `←` | Ramp Clamp up / down while held |
 
-Keys with Ctrl/Cmd/Alt held are ignored so browser shortcuts still work.
+Keys with Ctrl/Cmd/Alt held are ignored so browser shortcuts still work. Arrow
+ramps run on `requestAnimationFrame` rather than key auto-repeat, so they move
+smoothly from the first frame; each sweeps its slider end to end in about five
+seconds regardless of that slider's range.
 
 **UI panel**
 
@@ -105,7 +110,7 @@ Keys with Ctrl/Cmd/Alt held are ignored so browser shortcuts still work.
 - **Scale Grading** — `Color` maps intensity to hue; `Monochromatic` maps it to
   luminance.
 - **Intensity** — multiplier applied to intensity before coloring and extrusion
-  (halved in `Averages` mode).
+  (halved in `Averages` mode). Steps by `0.1` so the keyboard ramp is smooth.
 - **Clamp** — lower bound applied to intensity (`max(clamp, intensity)`),
   flattening everything below the threshold.
 
